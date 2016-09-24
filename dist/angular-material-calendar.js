@@ -326,10 +326,15 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     data.year--;
                 }
                 if (typeof $scope.onPrevMonth === 'function') {
+                    $scope.loading = true;
                     $scope.onPrevMonth(data).then(function() {
+                        $scope.loading = false;
                         $scope.calendar.prev();
                         setData();
-                    })
+                    }, function() { $scope.loading = false; });
+                } else {
+                    $scope.calendar.prev();
+                    setData();
                 }
                 //handleCb($scope.onPrevMonth, data);
             };
@@ -344,10 +349,14 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     data.year++;
                 }
                 if (typeof $scope.onNextMonth === 'function') {
+                    $scope.loading = true;
                     $scope.onNextMonth(data).then(function() {
                         $scope.calendar.next();
                         setData();
-                    })
+                    }, function() { $scope.loading = false; });
+                } else {
+                    $scope.calendar.next();
+                    setData();
                 }
                 //handleCb($scope.onNextMonth, data);
             };
