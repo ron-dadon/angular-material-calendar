@@ -351,6 +351,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 if (typeof $scope.onNextMonth === 'function') {
                     $scope.loading = true;
                     $scope.onNextMonth(data).then(function() {
+                        $scope.loading = false;
                         $scope.calendar.next();
                         setData();
                     }, function() { $scope.loading = false; });
