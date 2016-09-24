@@ -317,13 +317,17 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.prev = function () {
-                $scope.calendar.prev();
                 var data = {
                     year: $scope.calendar.year,
-                    month: $scope.calendar.month + 1
+                    month: $scope.calendar.month
                 };
+                if (data.month == 0) {
+                    data.month = 12;
+                    data.year--;
+                }
                 if (typeof $scope.onPrevMonth === 'function') {
-                    $scope.onPrevMonth().then(function() {
+                    $scope.onPrevMonth(data).then(function() {
+                        $scope.calendar.prev();
                         setData();
                     })
                 }
@@ -331,13 +335,17 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.next = function () {
-                $scope.calendar.next();
                 var data = {
                     year: $scope.calendar.year,
-                    month: $scope.calendar.month + 1
+                    month: $scope.calendar.month + 2
                 };
+                if (data.month == 13) {
+                    data.month--;
+                    data.year++;
+                }
                 if (typeof $scope.onNextMonth === 'function') {
-                    $scope.onNextMonth().then(function() {
+                    $scope.onNextMonth(data).then(function() {
+                        $scope.calendar.next();
                         setData();
                     })
                 }
