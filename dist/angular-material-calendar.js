@@ -345,7 +345,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     month: $scope.calendar.month + 2
                 };
                 if (data.month == 13) {
-                    data.month--;
+                    data.month = 1;
                     data.year++;
                 }
                 if (typeof $scope.onNextMonth === 'function') {
